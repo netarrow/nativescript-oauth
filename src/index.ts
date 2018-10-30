@@ -5,6 +5,7 @@
 import * as applicationModule from 'application';
 import * as utils from 'utils/utils';
 import { AuthHelperOffice365 } from './auth-helper-office365';
+import { AuthHelperRemoteOwnerPassword } from './auth-helper-remote-owner-password';
 import { AuthHelperFacebook } from './auth-helper-facebook';
 import { AuthHelperGoogle } from './auth-helper-google';
 import { AuthHelperUaa } from './auth-helper-uaa';
@@ -17,6 +18,23 @@ import * as TnsOAuth from './tns-oauth-interfaces';
 export var instance: TnsOAuth.ITnsAuthHelper = null;
 
 export * from './tns-oauth-interfaces';
+
+export function initRemoteOwnerPassword(options: TnsOAuth.ITnsOAuthOptionsRemoteOwnerPassword): Promise<any> {
+    return new Promise(function (resolve, reject) {
+        try {
+            if (instance !== null) {
+                reject("You already ran init");
+                return;
+            }
+
+            instance = new AuthHelperRemoteOwnerPassword(options);
+            resolve(instance);
+        } catch (ex) {
+            console.log("Error in AuthHelperRemoteOwnerPassword.init: " + ex);
+            reject(ex);
+        }
+    });
+}
 
 export function initOffice365(options: TnsOAuth.ITnsOAuthOptionsOffice365): Promise<any> {
     return new Promise(function (resolve, reject) {
@@ -144,8 +162,6 @@ export function initCustom(options: TnsOAuth.ITnsOAuthOptionsCustom): Promise<an
         }
     });
 }
-
-
 
 
 export function accessToken(): string {

@@ -101,6 +101,33 @@ export function getTokenFromCache() {
     return TnsOAuthTokenCache.getToken();
 }
 
+export function loginViaRemoteOwnerPassword(options: TnsOAuthModule.ITnsOAuthOptionsRemoteOwnerPassword, successPage?: string): Promise<TnsOAuthModule.ITnsOAuthTokenResult> {
+    return new Promise((resolve, reject) => {
+
+        var apiData = new FormData();
+        apiData.append("username", options.username);
+        apiData.append("password", options.password);
+
+        http.request({
+            url: options.apiLoginUrl,
+            method: 'POST',
+            content: apiData
+        }).then((response: http.HttpResponse) => {
+            console.log(response);
+
+            // todo create an ITnsOAuthTokenResult from the response
+
+            var mockResult: TnsOAuthModule.ITnsOAuthTokenResult = {
+                accessToken: 'mockToken',
+                refreshToken: 'mockRefreshToken',
+                accessTokenExpiration: new Date(),
+                refreshTokenExpiration: new Date()
+            }
+            resolve(mockResult);
+        })
+    });
+}
+
 export function loginViaAuthorizationCodeFlow(credentials: TnsOAuthModule.ITnsOAuthCredentials, successPage?: string): Promise<TnsOAuthModule.ITnsOAuthTokenResult> {
     return new Promise((resolve, reject) => {
         var navCount = 0;

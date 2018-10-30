@@ -73,3 +73,9 @@ export interface ITnsOAuthOptionsCustom {
     credentials: ITnsOAuthCredentials;
     cookieDomains: Array<string>;
 }
+export interface ITnsOAuthOptionsRemoteOwnerPassword {
+    username: string;
+    password: string;
+    apiLoginUrl: string;
+    oauthData: ITnsOAuthCredentials
+}
