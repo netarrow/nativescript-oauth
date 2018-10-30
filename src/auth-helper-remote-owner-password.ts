@@ -11,9 +11,10 @@ export class AuthHelperRemoteOwnerPassword extends AuthHelper implements TnsOAut
     constructor(options: TnsOAuth.ITnsOAuthOptionsRemoteOwnerPassword) {
 
         super();
+        
+        this.credentials = {} as any;
         Object.assign(this.credentials, options.oauthData);
         this.options = options;
-        this.credentials = {} as any;
     }
 
     public login(successPage?: string): Promise<string> {
